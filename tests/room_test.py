@@ -34,9 +34,20 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(1, self.room_1.guest_count())
 
     def test_song_list_starts_empty(self):
-        self.assertEqual(0, self.room_1.song_count())
+        self.assertEqual([], self.room_1.songs)
 
     def test_can_add_song_to_room(self):
         song_1 = Song("Massive Attack", "Teardrop")
         self.room_1.add_song_to_room(song_1)
-        self.assertEqual(1, self.room_1.song_count())
+        self.assertEqual([song_1], self.room_1.songs)
+
+    def test_mvp_functionality_in_one_go(self):
+        guest_1 = Guest("Kat")
+        guest_2 = Guest("Raff")
+        song_1 = Song("Massive Attack", "Teardrop")
+        self.room_1.check_in(guest_1)
+        self.room_1.check_in(guest_2)
+        self.room_1.check_out(guest_2)
+        self.room_1.add_song_to_room(song_1)
+        self.assertEqual(1, self.room_1.guest_count())
+        self.assertEqual([song_1], self.room_1.songs)
