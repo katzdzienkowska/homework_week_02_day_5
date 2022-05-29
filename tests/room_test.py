@@ -27,6 +27,8 @@ class TestRoom(unittest.TestCase):
     def test_can_check_in_guests(self):
         self.room_1.check_in(self.guest_1)
         self.room_1.check_in(self.guest_2)
+        self.assertEqual(10, self.guest_1.guest_wallet)
+        self.assertEqual(15, self.guest_2.guest_wallet)
         self.assertEqual(2, self.room_1.guest_count())
 
     def test_can_check_out_guests(self):
@@ -42,11 +44,13 @@ class TestRoom(unittest.TestCase):
         self.room_1.add_song_to_room(self.song_1)
         self.assertEqual([self.song_1], self.room_1.songs)
 
-    def test_mvp_functionality_in_one_go(self):
+    def test_all_functionality_in_one_go(self):
         self.room_1.check_in(self.guest_1)
         self.room_1.check_in(self.guest_2)
         self.room_1.check_out(self.guest_2)
         self.room_1.add_song_to_room(self.song_1)
+        self.assertEqual(10, self.guest_1.guest_wallet)
+        self.assertEqual(15, self.guest_2.guest_wallet)
         self.assertEqual(1, self.room_1.guest_count())
         self.assertEqual([self.song_1], self.room_1.songs)
         
